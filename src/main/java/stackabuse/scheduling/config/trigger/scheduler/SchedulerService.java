@@ -55,7 +55,6 @@ public class SchedulerService {
                             jobInfo.getJobName(),
                             new Date(),
                             jobInfo.getRepeatTime(),
-
                             SimpleTrigger.MISFIRE_INSTRUCTION_FIRE_NOW);
                 }
                 scheduler.scheduleJob(jobDetail, trigger);
