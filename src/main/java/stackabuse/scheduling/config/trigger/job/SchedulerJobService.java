@@ -47,8 +47,8 @@ public class SchedulerJobService {
         } else {
             schedulerService.updateScheduleJob(scheduleJob);
         }
-        scheduleJob.setJobDescription("i am job number " + scheduleJob.getJobId());
-        scheduleJob.setInterfaceName("interface_" + scheduleJob.getJobId());
+//        scheduleJob.setJobDescription("i am job number " + scheduleJob.getJobId());
+//        scheduleJob.setInterfaceName("interface_" + scheduleJob.getJobId());
         log.info(">>>>> jobName = [" + scheduleJob.getJobName() + "]" + " created.");
     }
 
