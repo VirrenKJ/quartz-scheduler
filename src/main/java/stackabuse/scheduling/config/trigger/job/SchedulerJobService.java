@@ -1,21 +1,17 @@
 package stackabuse.scheduling.config.trigger.job;
 
-import org.quartz.*;
+import org.quartz.JobKey;
+import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.EventListener;
-import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import stackabuse.scheduling.config.trigger.JobScheduleCreator;
-import stackabuse.scheduling.config.trigger.scheduler.SchedulerService;
-
-import java.util.Date;
+import stackabuse.scheduling.config.trigger.scheduler.SchedulerFactoryService;
 
 @Transactional
 @Service
@@ -24,7 +20,7 @@ public class SchedulerJobService {
     private static final Logger log = LoggerFactory.getLogger(SchedulerJobService.class);
 
     @Autowired
-    private SchedulerService schedulerService;
+    private SchedulerFactoryService schedulerFactoryService;
 
     @Autowired
     private SchedulerFactoryBean schedulerFactoryBean;
@@ -43,9 +39,9 @@ public class SchedulerJobService {
         }
         if (StringUtils.isEmpty(scheduleJob.getJobId())) {
             log.info("Job Info: {}", scheduleJob);
-            schedulerService.scheduleNewJob(scheduleJob);
+            schedulerFactoryService.scheduleNewJob(scheduleJob);
         } else {
-            schedulerService.updateScheduleJob(scheduleJob);
+            schedulerFactoryService.updateScheduleJob(scheduleJob);
         }
 //        scheduleJob.setJobDescription("i am job number " + scheduleJob.getJobId());
 //        scheduleJob.setInterfaceName("interface_" + scheduleJob.getJobId());

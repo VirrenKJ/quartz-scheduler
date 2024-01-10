@@ -1,4 +1,4 @@
-package stackabuse.scheduling.config.trigger;
+package stackabuse.scheduling.config.trigger.scheduler;
 
 import org.quartz.CronTrigger;
 import org.quartz.JobDataMap;
@@ -15,7 +15,7 @@ import java.text.ParseException;
 import java.util.Date;
 
 @Component
-public class JobScheduleCreator {
+public class SchedulerHelper {
 
     public CronTrigger createCronTrigger(String triggerName, Date startTime, String cronExpression, int misFireInstruction) {
         CronTriggerFactoryBean factoryBean = new CronTriggerFactoryBean();
@@ -42,8 +42,7 @@ public class JobScheduleCreator {
         return factoryBean.getObject();
     }
 
-    public JobDetail createJob(Class<? extends QuartzJobBean> jobClass, boolean isDurable,
-                               ApplicationContext context, String jobName, String jobGroup) {
+    public JobDetail createJob(Class<? extends QuartzJobBean> jobClass, boolean isDurable, ApplicationContext context, String jobName, String jobGroup) {
         JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
         factoryBean.setJobClass(jobClass);
         factoryBean.setDurability(isDurable);
