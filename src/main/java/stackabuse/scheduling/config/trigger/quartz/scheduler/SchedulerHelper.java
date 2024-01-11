@@ -1,4 +1,4 @@
-package stackabuse.scheduling.config.trigger.scheduler;
+package stackabuse.scheduling.config.trigger.quartz.scheduler;
 
 import org.quartz.CronTrigger;
 import org.quartz.JobDataMap;

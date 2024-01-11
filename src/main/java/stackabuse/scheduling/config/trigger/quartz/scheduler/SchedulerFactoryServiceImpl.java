@@ -1,4 +1,4 @@
-package stackabuse.scheduling.config.trigger.scheduler;
+package stackabuse.scheduling.config.trigger.quartz.scheduler;
 
 import org.quartz.*;
 import org.slf4j.Logger;
@@ -14,9 +14,9 @@ import stackabuse.scheduling.config.trigger.job.SchedulerJobRepository;
 import java.util.Date;
 
 @Service
-public class SchedulerFactoryService {
+public class SchedulerFactoryServiceImpl implements SchedulerFactoryService {
 
-    private static final Logger log = LoggerFactory.getLogger(SchedulerFactoryService.class);
+    private static final Logger log = LoggerFactory.getLogger(SchedulerFactoryServiceImpl.class);
 
     @Autowired
     private ApplicationContext context;
@@ -75,4 +75,19 @@ public class SchedulerFactoryService {
         }
     }
 
+    public void triggerJob(String name, String group) throws SchedulerException {
+        schedulerFactoryBean.getScheduler().triggerJob(new JobKey(name, group));
+    }
+
+    public void pauseJob(String name, String group) throws SchedulerException {
+        schedulerFactoryBean.getScheduler().pauseJob(new JobKey(name, group));
+    }
+
+    public void resumeJob(String name, String group) throws SchedulerException {
+        schedulerFactoryBean.getScheduler().resumeJob(new JobKey(name, group));
+    }
+
+    public boolean deleteJob(String name, String group) throws SchedulerException {
+        return schedulerFactoryBean.getScheduler().deleteJob(new JobKey(name, group));
+    }
 }
