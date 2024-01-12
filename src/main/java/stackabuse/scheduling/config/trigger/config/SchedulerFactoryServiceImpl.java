@@ -67,7 +67,8 @@ public class SchedulerFactoryServiceImpl implements SchedulerFactoryService {
             newTrigger = schedulerHelper.createSimpleTrigger(jobInfo.getJobName(), new Date(), jobInfo.getRepeatTime(), SimpleTrigger.MISFIRE_INSTRUCTION_FIRE_NOW);
         }
         try {
-            schedulerFactoryBean.getScheduler().rescheduleJob(TriggerKey.triggerKey(jobInfo.getJobName()), newTrigger);
+            Scheduler scheduler = schedulerFactoryBean.getScheduler();
+            scheduler.rescheduleJob(TriggerKey.triggerKey(jobInfo.getJobName()), newTrigger);
             jobInfo.setJobStatus("EDITED & SCHEDULED");
             schedulerJobRepository.save(jobInfo);
             log.info(">>>>> jobName = [" + jobInfo.getJobName() + "]" + " updated and scheduled.");
