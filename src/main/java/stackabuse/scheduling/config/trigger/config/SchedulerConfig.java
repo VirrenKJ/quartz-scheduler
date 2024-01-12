@@ -1,4 +1,4 @@
-package stackabuse.scheduling.config;
+package stackabuse.scheduling.config.trigger.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.quartz.QuartzProperties;

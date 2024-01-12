@@ -1,4 +1,4 @@
-package stackabuse.scheduling.config.trigger.quartz.scheduler;
+package stackabuse.scheduling.config.trigger.config;
 
 import org.quartz.*;
 import org.slf4j.Logger;
@@ -10,6 +10,7 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Service;
 import stackabuse.scheduling.config.trigger.job.SchedulerJobInfo;
 import stackabuse.scheduling.config.trigger.job.SchedulerJobRepository;
+import stackabuse.scheduling.config.trigger.quartz.scheduler.SchedulerHelper;
 
 import java.util.Date;
 

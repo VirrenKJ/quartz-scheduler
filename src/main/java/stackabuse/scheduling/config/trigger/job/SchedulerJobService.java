@@ -10,7 +10,7 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import stackabuse.scheduling.config.trigger.quartz.scheduler.SchedulerFactoryService;
+import stackabuse.scheduling.config.trigger.config.SchedulerFactoryService;
 
 @Transactional
 @Service

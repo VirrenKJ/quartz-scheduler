@@ -1,4 +1,4 @@
-package stackabuse.scheduling.config.trigger.quartz.scheduler;
+package stackabuse.scheduling.config.trigger.config;
 
 import org.springframework.stereotype.Component;
 

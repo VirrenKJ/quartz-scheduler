@@ -1,4 +1,4 @@
-package stackabuse.scheduling.config.trigger.quartz.scheduler;
+package stackabuse.scheduling.config.trigger.config;
 
 import org.quartz.SchedulerException;
 import stackabuse.scheduling.config.trigger.job.SchedulerJobInfo;
