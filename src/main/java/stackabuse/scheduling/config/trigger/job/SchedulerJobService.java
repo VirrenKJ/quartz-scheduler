@@ -22,9 +22,6 @@ public class SchedulerJobService {
     private SchedulerFactoryService schedulerFactoryService;
 
     @Autowired
-    private SchedulerFactoryBean schedulerFactoryBean;
-
-    @Autowired
     private SchedulerJobRepository schedulerJobRepository;
 
     public void saveOrUpdate(SchedulerJobInfo scheduleJob) throws Exception {

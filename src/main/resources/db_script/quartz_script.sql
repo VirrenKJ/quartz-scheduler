@@ -1,166 +1,20 @@
 -- qrtz_job_details
-create table qrtz_job_details
-(
-    sched_name        varchar(120) not null,
-    job_name          varchar(200) not null,
-    job_group         varchar(200) not null,
-    description       varchar(250),
-    job_class_name    varchar(250) not null,
-    is_durable        boolean      not null,
-    is_nonconcurrent  boolean      not null,
-    is_update_data    boolean      not null,
-    requests_recovery boolean      not null,
-    job_data          mediumblob,
-    primary key (sched_name, job_name, job_group)
-);
-
--- qrtz_triggers
-create table qrtz_triggers
-(
-    sched_name     varchar(120) not null,
-    trigger_name   varchar(200) not null,
-    trigger_group  varchar(200) not null,
-    job_name       varchar(200) not null,
-    job_group      varchar(200) not null,
-    description    varchar(250),
-    next_fire_time bigint(13),
-    prev_fire_time bigint(13),
-    priority       integer,
-    trigger_state  varchar(16)  not null,
-    trigger_type   varchar(8)   not null,
-    start_time     bigint(13)   not null,
-    end_time       bigint(13),
-    calendar_name  varchar(200),
-    misfire_instr  smallint(2),
-    job_data       mediumblob,
-    primary key (sched_name, trigger_name, trigger_group),
-    foreign key (sched_name, job_name, job_group) references qrtz_job_details (sched_name, job_name, job_group)
-);
-
--- qrtz_blob_triggers
-create table qrtz_blob_triggers
-(
-    sched_name    varchar(120) not null,
-    trigger_name  varchar(200) not null,
-    trigger_group varchar(200) not null,
-    blob_data     mediumblob,
-    primary key (sched_name, trigger_name, trigger_group),
-    foreign key (sched_name, trigger_name, trigger_group) references qrtz_triggers (sched_name, trigger_name, trigger_group)
-);
-
--- qrtz_calendars
-create table qrtz_calendars
-(
-    sched_name    varchar(120) not null,
-    calendar_name varchar(200) not null,
-    calendar      mediumtext   not null,
-    primary key (sched_name, calendar_name)
-);
-
--- qrtz_cron_triggers
-create table qrtz_cron_triggers
-(
-    sched_name      varchar(120) not null,
-    trigger_name    varchar(200) not null,
-    trigger_group   varchar(200) not null,
-    cron_expression varchar(120) not null,
-    time_zone_id    varchar(80),
-    primary key (sched_name, trigger_name, trigger_group),
-    foreign key (sched_name, trigger_name, trigger_group) references qrtz_triggers (sched_name, trigger_name, trigger_group)
-);
-
--- qrtz_fired_triggers
-create table qrtz_fired_triggers
-(
-    sched_name        varchar(120) not null,
-    entry_id          varchar(95)  not null,
-    trigger_name      varchar(200) not null,
-    trigger_group     varchar(200) not null,
-    instance_name     varchar(200) not null,
-    fired_time        bigint(13)   not null,
-    sched_time        bigint(13)   not null,
-    priority          integer      not null,
-    state             varchar(16)  not null,
-    job_name          varchar(200),
-    job_group         varchar(200),
-    is_nonconcurrent  boolean,
-    requests_recovery boolean,
-    primary key (sched_name, entry_id)
-);
-
--- qrtz_job_listeners
-create table qrtz_job_listeners
-(
-    sched_name   varchar(120) not null,
-    job_name     varchar(200) not null,
-    job_group    varchar(200) not null,
-    job_listener varchar(200) not null,
-    primary key (sched_name, job_name, job_group, job_listener),
-    foreign key (sched_name, job_name, job_group) references qrtz_job_details (sched_name, job_name, job_group)
-);
-
--- qrtz_locks
-create table qrtz_locks
-(
-    sched_name varchar(120) not null,
-    lock_name  varchar(40)  not null,
-    primary key (sched_name, lock_name)
-);
-
--- qrtz_paused_trigger_grps
-create table qrtz_paused_trigger_grps
-(
-    sched_name    varchar(120) not null,
-    trigger_group varchar(200) not null,
-    primary key (sched_name, trigger_group)
-);
-
--- qrtz_scheduler_state
-create table qrtz_scheduler_state
-(
-    sched_name        varchar(120) not null,
-    instance_name     varchar(200) not null,
-    last_checkin_time bigint(13)   not null,
-    checkin_interval  bigint(13)   not null,
-    primary key (sched_name, instance_name)
-);
-
--- qrtz_simple_triggers
-create table qrtz_simple_triggers
-(
-    sched_name      varchar(120) not null,
-    trigger_name    varchar(200) not null,
-    trigger_group   varchar(200) not null,
-    repeat_count    bigint(7)    not null,
-    repeat_interval bigint(12)   not null,
-    times_triggered bigint(10)   not null,
-    primary key (sched_name, trigger_name, trigger_group),
-    foreign key (sched_name, trigger_name, trigger_group) references qrtz_triggers (sched_name, trigger_name, trigger_group)
-);
-
--- qrtz_simprop_triggers
-create table qrtz_simprop_triggers
-(
-    sched_name    varchar(120) not null,
-    trigger_name  varchar(200) not null,
-    trigger_group varchar(200) not null,
-    str_prop_1    varchar(512),
-    str_prop_2    varchar(512),
-    str_prop_3    varchar(512),
-    int_prop_1    int,
-    int_prop_2    int,
-    long_prop_1   bigint,
-    long_prop_2   bigint,
-    dec_prop_1    numeric(13, 4),
-    dec_prop_2    numeric(13, 4),
-    bool_prop_1   boolean,
-    bool_prop_2   boolean,
-    primary key (sched_name, trigger_name, trigger_group),
-    foreign key (sched_name, trigger_name, trigger_group) references qrtz_triggers (sched_name, trigger_name, trigger_group)
-);
+DROP TABLE IF EXISTS qrtz_simple_triggers;
+DROP TABLE IF EXISTS qrtz_cron_triggers;
+DROP TABLE IF EXISTS qrtz_simprop_triggers;
+DROP TABLE IF EXISTS qrtz_blob_triggers;
+DROP TABLE IF EXISTS qrtz_triggers;
+DROP TABLE IF EXISTS qrtz_paused_trigger_grps;
+DROP TABLE IF EXISTS qrtz_fired_triggers;
+DROP TABLE IF EXISTS qrtz_scheduler_state;
+DROP TABLE IF EXISTS qrtz_calendars;
+DROP TABLE IF EXISTS qrtz_job_listeners;
+DROP TABLE IF EXISTS qrtz_job_details;
+DROP TABLE IF EXISTS qrtz_locks;
+DROP TABLE IF EXISTS scheduler_job_info;
 
 -- For App
-CREATE TABLE IF NOT EXISTS scheduler_job_info
+CREATE TABLE scheduler_job_info
 (
     job_id          INT AUTO_INCREMENT PRIMARY KEY,
     job_name        VARCHAR(255),
@@ -172,4 +26,137 @@ CREATE TABLE IF NOT EXISTS scheduler_job_info
     interface_name  VARCHAR(255),
     repeat_time     BIGINT,
     cron_job        BOOLEAN
+);
+
+CREATE TABLE QRTZ_JOB_DETAILS (
+  SCHED_NAME VARCHAR(120) NOT NULL,
+  JOB_NAME VARCHAR(200) NOT NULL,
+  JOB_GROUP VARCHAR(200) NOT NULL,
+  DESCRIPTION VARCHAR(250) NULL,
+  JOB_CLASS_NAME VARCHAR(250) NOT NULL,
+  IS_DURABLE BOOLEAN NOT NULL,
+  IS_NONCONCURRENT BOOLEAN NOT NULL,
+  IS_UPDATE_DATA BOOLEAN NOT NULL,
+  REQUESTS_RECOVERY BOOLEAN NOT NULL,
+  JOB_DATA BLOB NULL,
+  PRIMARY KEY (SCHED_NAME, JOB_NAME, JOB_GROUP)
+);
+
+CREATE TABLE QRTZ_TRIGGERS (
+  SCHED_NAME VARCHAR(120) NOT NULL,
+  TRIGGER_NAME VARCHAR(200) NOT NULL,
+  TRIGGER_GROUP VARCHAR(200) NOT NULL,
+  JOB_NAME VARCHAR(200) NOT NULL,
+  JOB_GROUP VARCHAR(200) NOT NULL,
+  DESCRIPTION VARCHAR(250) NULL,
+  NEXT_FIRE_TIME BIGINT(13) NULL,
+  PREV_FIRE_TIME BIGINT(13) NULL,
+  PRIORITY INTEGER NULL,
+  TRIGGER_STATE VARCHAR(16) NOT NULL,
+  TRIGGER_TYPE VARCHAR(8) NOT NULL,
+  START_TIME BIGINT(13) NOT NULL,
+  END_TIME BIGINT(13) NULL,
+  CALENDAR_NAME VARCHAR(200) NULL,
+  MISFIRE_INSTR SMALLINT(2) NULL,
+  JOB_DATA BLOB NULL,
+  PRIMARY KEY (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP),
+  FOREIGN KEY (SCHED_NAME, JOB_NAME, JOB_GROUP)
+    REFERENCES QRTZ_JOB_DETAILS(SCHED_NAME, JOB_NAME, JOB_GROUP)
+);
+
+CREATE TABLE QRTZ_SIMPLE_TRIGGERS (
+  SCHED_NAME VARCHAR(120) NOT NULL,
+  TRIGGER_NAME VARCHAR(200) NOT NULL,
+  TRIGGER_GROUP VARCHAR(200) NOT NULL,
+  REPEAT_COUNT INTEGER NOT NULL,
+  REPEAT_INTERVAL BIGINT(13) NOT NULL,
+  TIMES_TRIGGERED INTEGER NOT NULL,
+  PRIMARY KEY (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP),
+  FOREIGN KEY (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP)
+    REFERENCES QRTZ_TRIGGERS(SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP)
+);
+
+CREATE TABLE QRTZ_CRON_TRIGGERS (
+  SCHED_NAME VARCHAR(120) NOT NULL,
+  TRIGGER_NAME VARCHAR(200) NOT NULL,
+  TRIGGER_GROUP VARCHAR(200) NOT NULL,
+  CRON_EXPRESSION VARCHAR(120) NOT NULL,
+  TIME_ZONE_ID VARCHAR(80),
+  PRIMARY KEY (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP),
+  FOREIGN KEY (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP)
+    REFERENCES QRTZ_TRIGGERS(SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP)
+);
+
+CREATE TABLE QRTZ_SIMPROP_TRIGGERS (
+  SCHED_NAME VARCHAR(120) NOT NULL,
+  TRIGGER_NAME VARCHAR(200) NOT NULL,
+  TRIGGER_GROUP VARCHAR(200) NOT NULL,
+  STR_PROP_1 VARCHAR(512) NULL,
+  STR_PROP_2 VARCHAR(512) NULL,
+  STR_PROP_3 VARCHAR(512) NULL,
+  INT_PROP_1 INT NULL,
+  INT_PROP_2 INT NULL,
+  LONG_PROP_1 BIGINT NULL,
+  LONG_PROP_2 BIGINT NULL,
+  DEC_PROP_1 DECIMAL(13, 4) NULL,
+  DEC_PROP_2 DECIMAL(13, 4) NULL,
+  BOOL_PROP_1 BOOLEAN NULL,
+  BOOL_PROP_2 BOOLEAN NULL,
+  PRIMARY KEY (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP),
+  FOREIGN KEY (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP)
+    REFERENCES QRTZ_TRIGGERS(SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP)
+);
+
+CREATE TABLE QRTZ_BLOB_TRIGGERS (
+  SCHED_NAME VARCHAR(120) NOT NULL,
+  TRIGGER_NAME VARCHAR(200) NOT NULL,
+  TRIGGER_GROUP VARCHAR(200) NOT NULL,
+  BLOB_DATA BLOB NULL,
+  PRIMARY KEY (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP),
+  FOREIGN KEY (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP)
+    REFERENCES QRTZ_TRIGGERS(SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP)
+);
+
+CREATE TABLE QRTZ_CALENDARS (
+  SCHED_NAME VARCHAR(120) NOT NULL,
+  CALENDAR_NAME VARCHAR(200) NOT NULL,
+  CALENDAR BLOB NOT NULL,
+  PRIMARY KEY (SCHED_NAME, CALENDAR_NAME)
+);
+
+CREATE TABLE QRTZ_PAUSED_TRIGGER_GRPS (
+  SCHED_NAME VARCHAR(120) NOT NULL,
+  TRIGGER_GROUP VARCHAR(200) NOT NULL,
+  PRIMARY KEY (SCHED_NAME, TRIGGER_GROUP)
+);
+
+CREATE TABLE QRTZ_FIRED_TRIGGERS (
+  SCHED_NAME VARCHAR(120) NOT NULL,
+  ENTRY_ID VARCHAR(140) NOT NULL,
+  TRIGGER_NAME VARCHAR(200) NOT NULL,
+  TRIGGER_GROUP VARCHAR(200) NOT NULL,
+  INSTANCE_NAME VARCHAR(200) NOT NULL,
+  FIRED_TIME BIGINT(13) NOT NULL,
+  SCHED_TIME BIGINT(13) NOT NULL,
+  PRIORITY INTEGER NOT NULL,
+  STATE VARCHAR(16) NOT NULL,
+  JOB_NAME VARCHAR(200) NULL,
+  JOB_GROUP VARCHAR(200) NULL,
+  IS_NONCONCURRENT BOOLEAN NULL,
+  REQUESTS_RECOVERY BOOLEAN NULL,
+  PRIMARY KEY (SCHED_NAME, ENTRY_ID)
+);
+
+CREATE TABLE QRTZ_SCHEDULER_STATE (
+  SCHED_NAME VARCHAR(120) NOT NULL,
+  INSTANCE_NAME VARCHAR(200) NOT NULL,
+  LAST_CHECKIN_TIME BIGINT(13) NOT NULL,
+  CHECKIN_INTERVAL BIGINT(13) NOT NULL,
+  PRIMARY KEY (SCHED_NAME, INSTANCE_NAME)
+);
+
+CREATE TABLE QRTZ_LOCKS (
+  SCHED_NAME VARCHAR(120) NOT NULL,
+  LOCK_NAME VARCHAR(40) NOT NULL,
+  PRIMARY KEY (SCHED_NAME, LOCK_NAME)
 );
